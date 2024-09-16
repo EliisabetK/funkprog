@@ -1,7 +1,7 @@
 module K2
 
 fst : (a, b) -> a
-fst = ?rhs_fst
+fst (a, b) = a
 
 -- varjame sisseehitatud listi pikkuse arvutuse
 %hide Prelude.List.length
@@ -21,15 +21,18 @@ infixr 7 ++
 
 
 replicate : Int -> a -> List a
-replicate = ?rhs_replicate
+replicate n a = if n > 0 then a :: replicate (n - 1) a else []
 
 
 take : Int -> List a -> List a
-take = ?rhs_take
+take n [] = []
+take 0 (x :: xs) = []
+take n (x :: xs) = x :: take (n - 1) xs
 
 
 sum : List Integer -> Integer
-sum = ?rhs_sum
+sum [] = 0
+sum (x :: xs) = x + sum xs
 
 
 drop : Int -> List a -> List a
