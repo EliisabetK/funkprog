@@ -1,12 +1,16 @@
 module K3
 import Data.String
 
----1. Leia termidest vabad muutujad! ? teha edasi
----FV(λf. (λg. g x) (λx. f x)) = x
----FV((λx. (λg. g x)) x) = FV λx. (λg. g x) U FV (λx. f x) = (FV (λg. g x) - {x}) U {x} = FV(g x) - {g} + {x} - {x}  U {x} = {x}
----FV(λg. (λf. f x) (λx. g x)) = x
----FV((λy. y) (λf x. y x) (λx. g x)) = y, g
----FV(z λh x. (λf. h f) x) = z
+---1. Leia termidest vabad muutujad 
+---FV(λf.(λg.gx)(λx.fx))=FV((λg.gx)(λx.fx))−{f}=(FV(λg.gx)∪FV(λx.fx))−{f}=({x}∪{f})−{f} = {x}
+
+---FV((λx.(λg.gx))x)=FV(λx.(λg.gx))∪FV(x)=(FV(λg.gx)−{x})∪{x}={x}−{x}∪{x} = {x}
+
+---FV(λg.(λf.fx)(λx.gx))=FV((λf.fx)(λx.gx))−{g}=(FV(λf.fx)∪FV(λx.gx))−{g}=({x}∪{g})−{g} = {x}
+
+---FV((λy.y)(λfx.yx)(λx.gx))=FV(λy.y)∪FV(λfx.yx)∪FV(λx.gx)=∅ ∪{y}∪{g} = {y,g}
+
+---FV(z λhx.(λf.hf)x)=FV(z)∪FV(λhx.(λf.hf)x)={z}∪(FV(λf.hf)∪FV(x)−{h,x})={z}∪({h}∪{x}−{h,x}) = {z}
 
 
 --- 2. Leia substitutsiooni tulemus!
