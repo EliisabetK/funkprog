@@ -28,8 +28,7 @@ length' xs = foldr(\y, pikkus => 1 + pikkus) 0 xs
 
 productList : List Int -> Int
 productList = foldr (*) 1
---productList [3,2,0] = \ 3 (foldr \ [3, 2, 0]) = \3 (\2 foldr \ [0]) = \3 (\2 (\0 foldr \ [])) = \3 \2 \0 1 =
---= \3 \2 0*1 = \3 \2 0 = \3 2*0 = \3 0 = 3*0 = 0
+--productList [3,2,0] = 3 * (foldr * [2,0] 1) = 3 * 2 * (foldr [0] 1) = 3 * 2 * 0 foldr[] 1 = 3 * 2 * 0 * 1 = 0
 
 
 append' : List a -> List a -> List a
