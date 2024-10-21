@@ -1,0 +1,38 @@
+Olgu antud makrodefinitsioonid: I ≡ (λx. x) ja K ≡ (λx y. x).
+Teosta järgnev substitutsioon:
+((λy. y x)(K x))[x → y]
+ 
+1. K x = (λx y. x) x = λy. x
+((λy. y x)((λy. x)))[x → y] = ((λz. z x)((λz. x)))[x → y] = ((λz. z y)((λz. y))) = (λz. z y) y = y
+
+
+Reduktsioon (6/31)
+Olgu antud makrodefinitsioonid: I ≡ (λx. x) ja K ≡ (λx y. x).
+Väärtusta järgnev term normaalkujule kasutades aplikatiivjärjekorda. Mitme β-reduktsiooni
+sammu pidite tegema?
+
+1. Redutseerime ((λy. I y) x)
+((λy. I y) x) = ((λy.( (λy. y) y)) x) = ((λy. y) x) = I x = x
+
+2. Rakendame funktsiooni argumendile x
+(λx. K x x y) x = K x x y = (λx y. x) x x y
+Rakendame 1. argumendile:  (λx y. x) x = λy. x
+Rakendame 2. argumendile: (λy. x) x = x
+y-t ignoreeritakse
+
+Lõpptulemus x
+
+
+Andmestruktuurid (5/31)
+Olgu antud makrodefinitsioonid:
+(E1, E2) ≡ (λs. s E1 E2) 
+snd ≡ (λp. p false) 
+fst ≡ (λp. p true)
+
+false ≡ (λt e. e)
+true ≡ (λt e. t)
+
+Mis on järgneva termi väärtus?
+snd ((true, false) (K (I x) y)) =
+snd ((true, false) (K x y)) = snd ((true, false) ((λx y. x) x y)) =
+snd ((true, false) x) = x

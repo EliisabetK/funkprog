@@ -1,5 +1,7 @@
 module K6
 import Data.Nat
+import Data.List
+import Data.Stream
 
 data Tree a = Leaf | Branch (Tree a) a (Tree a)
  
@@ -111,3 +113,10 @@ Range Rat where
       while (<= (e :/: f)) (rangeFromThen (a :/: b) (c :/: d))
 
 ----------------------------------------------------------------
+
+f : Int -> String
+f x = show x  -- Simple function to convert Int to String
+
+main : IO ()
+main = do
+  Prelude.IO.print (take 2 (map f [0..10000]))
