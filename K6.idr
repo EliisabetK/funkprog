@@ -1,5 +1,7 @@
 module K6
 import Data.Nat
+import Data.List
+import Data.Stream
 
 data Tree a = Leaf | Branch (Tree a) a (Tree a)
  
@@ -17,7 +19,7 @@ Functor Tree where
 Foldable Tree where
   foldr f b Leaf = b
   foldr f b (Branch v x p) = foldr f (f x (foldr f b p)) v
-  --foldr f b (Branch v x p) = let rightfold = f val (f x (foldr f b p) foldr f rightfold v
+  
 ----------------------------------------------------------------
 
 len : Foldable t => t a -> Int
@@ -86,20 +88,35 @@ Monus Rat where
 
 ----------------------------------------------------------------
 
+iter : (a -> a) -> a -> Stream a
+iter f x = x :: iter f (f x)
+
+while : (a -> Bool) -> Stream a -> List a
+while p (x :: xs) = if p x then x :: while p xs else []
+
+inc1 : Rat -> Rat
+inc1 (a :/: b) = norm ((a + b) :/: b)
+
+samm : Rat -> Rat -> Rat
+samm (a :/: b) (c :/: d) = norm (((-.) (a * d)  (c * b)) :/: (b * d))
+
+lisaSamm : Rat -> Rat -> Rat
+lisaSamm (a :/: b) (c :/: d) = norm ((a * d + b * c) :/: (b * d))
+
 Range Rat where
-  rangeFromTo (a :/: b) (c :/: d) =
-    let step = if a <= c then 1 :/: 1 else (-1) :/: 1
-    in rangeFromThenTo (a :/: b) (a + step :/: b) (c :/: d)
-
-  rangeFromThenTo (a :/: b) (step :/: _) (c :/: d) =
-    if step == 0 :/: 1 then repeat (a :/: b)
-    else if step > 0 :/: 1 then takeWhile (<= c :/: d) (iterate (+ step) (a :/: b))
-    else takeWhile (>= c :/: d) (iterate (+ step) (a :/: b))
-
-  take n (a :/: b) = take n (iterate (+ 1 :/: 1) (a :/: b))
-
-  rangeFrom (a :/: b) = iterate (+ 1 :/: 1) (a :/: b)
-
-  rangeFromThen (a :/: b) (step :/: _) = iterate (+ step) (a :/: b)
+  rangeFrom (a :/: b) = iter inc1 (a :/: b)
+  rangeFromTo (a :/: b) (c :/: d) = while (<= (c :/: d)) (rangeFrom (a :/: b))
+  rangeFromThen (a :/: b) (c :/: d) = 
+      let step = samm (c :/: d) (a :/: b)
+      in iter (lisaSamm step) (a :/: b)
+  rangeFromThenTo (a :/: b) (c :/: d) (e :/: f) = 
+      while (<= (e :/: f)) (rangeFromThen (a :/: b) (c :/: d))
 
 ----------------------------------------------------------------
+
+f : Int -> String
+f x = show x  -- Simple function to convert Int to String
+
+main : IO ()
+main = do
+  Prelude.IO.print (take 2 (map f [0..10000]))
