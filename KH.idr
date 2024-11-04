@@ -1,3 +1,6 @@
+import Prelude
+
+
 yl4 : List (Int, Bool) -> Maybe Nat
 yl4 xs = 
   let sum = foldr f 0 xs
@@ -28,3 +31,9 @@ find_all : Eq a => a -> Tree (a, b) -> List (b)
 find_all x LeafNothing = []
 find_all x (LeafJust a) = if fst a == x then [snd(a)] else []
 find_all x (Branch left right) = find_all x left ++ find_all x right
+
+p : List String -> IO ()
+p [] = pure ()
+p (x::xs) = do
+    putStrLn x
+    p xs
