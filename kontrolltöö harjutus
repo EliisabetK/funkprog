@@ -36,3 +36,8 @@ Mis on järgneva termi väärtus?
 snd ((true, false) (K (I x) y)) =
 snd ((true, false) (K x y)) = snd ((true, false) ((λx y. x) x y)) =
 snd ((true, false) x) = x
+
+
+
+
+
