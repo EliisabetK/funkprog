@@ -136,9 +136,12 @@ m2ngWhileR low high num = do
         m2ngWhileR (num + 1) high uusPakkumine
       2 => do
         uusPakkumine <- randomRIO (the Int32 low, the Int32 (num - 1))
-        m2ngWhileR low (num - 1) uusPakkumine
+        m2ngWhileR low (num -1 ) uusPakkumine
       3 => putStrLn "Mina võitsin"
-      _ => putStrLn "Proovi uuesti."
+      _ => do 
+        putStrLn "Proovi uuesti." 
+        m2ngWhileR low num pakkumine
+           
 
 m2ngR : IO ()
 m2ngR = do
