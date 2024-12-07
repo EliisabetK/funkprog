@@ -38,6 +38,6 @@ snd ((true, false) (K x y)) = snd ((true, false) ((λx y. x) x y)) =
 snd ((true, false) x) = x
 
 
-
+teha järjest vasakult paremale
 
 

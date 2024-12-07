@@ -36,4 +36,4 @@ p : List String -> IO ()
 p [] = pure ()
 p (x::xs) = do
     putStrLn x
-    p xs
+    
