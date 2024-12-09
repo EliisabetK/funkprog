@@ -131,16 +131,32 @@ plusOddOdd :  Odd n  ->  Odd m
              -------------------
            ->     Even (n+m)
 
-plusOddOdd Even_Zero b = b
+plusOddOdd Odd_one Odd_one = Even_Succ Even_Zero
+plusOddOdd Odd_one (Odd_Succ b) = Even_Succ (plusOddOdd Odd_one b)
 plusOddOdd (Odd_Succ a) b = Even_Succ (plusOddOdd a b)
 
- 
+
 plusEvenOdd :  Even n  ->  Odd m
              -------------------
            ->     Odd (n+m)
-plusEvenOdd a b = ?plusEvenOdd_v
- 
+
+plusEvenOdd Even_Zero b = b
+plusEvenOdd (Even_Succ a) b = Odd_Succ (plusEvenOdd a b)
+
 plusNullOdd :    Odd m
               ------------
             -> Odd (m+0)
-plusNullOdd a = ?plusNullOdd_v
+
+plusNullOdd Odd_one = Odd_one
+plusNullOdd (Odd_Succ a)= Odd_Succ (plusNullOdd a)
+
+
+plusAssoc : (m:Nat) -> (n:Nat) -> (q:Nat)
+            ------------------------------
+          ->  m + (n + q) = (m + n) + q
+
+
+plusAssoc Z n q = Refl
+plusAssoc (S m) n q =
+                    let x = plusAssoc m n q in
+                    rewrite x in Refl
